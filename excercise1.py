@@ -108,7 +108,7 @@ def computeCost(X, y, theta):
     Compute the cost of a particular choice of theta.
     You should set J to the cost.
     """
-
+    global H
     # initialize some useful values
     m = y.size  # number of training examples
     H=X.dot(theta.T)
@@ -132,3 +132,61 @@ print('Expected cost value (approximately) 32.07\n')
 J = computeCost(X, y, theta=np.array([-1, 2]))
 print('With theta = [-1, 2]\nCost computed = %.2f' % J)
 print('Expected cost value (approximately) 54.24')
+
+def diffcostfn(theta,X,y):
+    global H
+    m=y.size
+    H=X.dot(theta.T)
+    dtheta0=0
+    dtheta1=0
+    for i in range(m):
+        dtheta0+=(H[i]-y[i])/(m)
+        dtheta1+=((H[i]-y[i])*X[i][1])/(m)
+    #print("dtheta1",dtheta1)
+    return dtheta0,dtheta1
+
+
+
+
+def gradientDescent(X, y, theta, alpha, num_iters):
+    """
+    Performs gradient descent to learn `theta`. Updates theta by taking `num_iters`
+    gradient steps with learning rate `alpha`.
+
+    """
+    global H
+    # Initialize some useful values
+    #temp0=np.zeroes
+    m = y.shape[0]  # number of training examples
+    #H=X.dot(theta.T)
+    # make a copy of theta, to avoid changing the original array, since numpy arrays
+    # are passed by reference to functions
+    theta = theta.copy()
+
+    J_history = [] # Use a python list to save cost in every iteration
+
+    for i in range(num_iters):
+        # ==================== YOUR CODE HERE =================================
+          J0,J1=diffcostfn(theta,X,y)
+          temp0=theta[0]-alpha*J0
+          temp1=theta[1]-alpha*J1
+          #print("temp1",temp1)
+          #print("Q1",theta[1])
+          theta[0]=temp0
+          theta[1]=temp1
+        # =====================================================================
+        # save the cost J in every iteration
+          J_history.append(computeCost(X, y, theta))
+
+    return theta, J_history
+
+# initialize fitting parameters
+theta = np.zeros(2)
+
+# some gradient descent settings
+iterations = 1500
+alpha = 0.01
+
+theta, J_history = gradientDescent(X ,y, theta, alpha, iterations)
+print('Theta found by gradient descent: {:.4f}, {:.4f}'.format(*theta))
+print('Expected theta values (approximately): [-3.6303, 1.1664]')
