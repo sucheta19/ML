@@ -69,7 +69,7 @@ def plotData(x, y):
     pyplot.plot(x,y,'ro',mec='k')
     pyplot.ylabel('Profit in $10,000')
     pyplot.xlabel('Population of City in 10,000s')
-    pyplot.show()
+    #pyplot.show()
 
 plotData(X,y)
 
@@ -190,3 +190,10 @@ alpha = 0.01
 theta, J_history = gradientDescent(X ,y, theta, alpha, iterations)
 print('Theta found by gradient descent: {:.4f}, {:.4f}'.format(*theta))
 print('Expected theta values (approximately): [-3.6303, 1.1664]')
+
+
+
+# plot the linear fit
+#plotData(X[:,1],y)
+pyplot.plot(X[:,1],H,'b-')
+pyplot.legend(['Training data', 'Linear regression'])
