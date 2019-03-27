@@ -70,7 +70,7 @@ def plotData(x, y):
     pyplot.ylabel('Profit in $10,000')
     pyplot.xlabel('Population of City in 10,000s')
     #pyplot.show()
-
+pyplot.subplot(1,2,1)
 plotData(X,y)
 
 # Add a column of ones to X. The numpy function stack joins arrays along a given axis.
@@ -195,5 +195,9 @@ print('Expected theta values (approximately): [-3.6303, 1.1664]')
 
 # plot the linear fit
 #plotData(X[:,1],y)
+
 pyplot.plot(X[:,1],H,'b-')
 pyplot.legend(['Training data', 'Linear regression'])
+pyplot.subplot(1,2,2)
+pyplot.plot(J_history,np.arange(0,iterations,1),'y-')
+pyplot.legend(['Cost function'])
